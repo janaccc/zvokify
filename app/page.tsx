@@ -12,7 +12,7 @@ export default function Page() {
     {
       title: "Mešano meso",
       artist: "123",
-      src: "../public/music/mesanomeso.mp3",
+      src: "/music/mesanomeso.mp3",
     },
 
   ];
