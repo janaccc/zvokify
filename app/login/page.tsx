@@ -20,26 +20,48 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-6">
+      <div className="bg-gray-900 rounded-2xl shadow-xl p-8 w-full max-w-md">
+        <h1 className="text-3xl font-bold text-center mb-6">🔐 Login</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div>
+            <label className="block text-gray-300 mb-1">Email</label>
+            <input
+              type="email"
+              className="w-full p-3 rounded-xl bg-gray-800 text-white placeholder-gray-500 border border-gray-700 focus:border-indigo-500 outline-none"
+              placeholder="Vnesi email..."
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <input
-          type="password"
-          placeholder="Geslo"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <div>
+            <label className="block text-gray-300 mb-1">Geslo</label>
+            <input
+              type="password"
+              className="w-full p-3 rounded-xl bg-gray-800 text-white placeholder-gray-500 border border-gray-700 focus:border-indigo-500 outline-none"
+              placeholder="Vnesi geslo..."
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-        <button type="submit">Prijava</button>
-      </form>
-    </div>
+          <button
+            type="submit"
+            className="w-full p-3 mt-2 bg-indigo-600 rounded-xl hover:bg-indigo-500 transition font-semibold"
+          >
+            Prijava
+          </button>
+        </form>
+
+        <p className="text-center text-gray-400 mt-4 text-sm">
+          Nimaš računa?{" "}
+          <a href="/register" className="text-indigo-400 hover:underline">
+            Registriraj se
+          </a>
+        </p>
+      </div>
+    </main>
   );
 }
