@@ -43,7 +43,7 @@ export default function Page() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-6">
       <div className="bg-gray-900 rounded-2xl shadow-xl p-6 w-full max-w-md text-center">
-        <h1 className="text-2xl font-bold mb-4">🎵 Simple MP3 Player</h1>
+        <h1 className="text-2xl font-bold mb-4">Simple MP3 Player</h1>
 
         <h2 className="text-xl font-semibold">{tracks[currentTrack].title}</h2>
         <p className="text-gray-400 mb-4">{tracks[currentTrack].artist}</p>
