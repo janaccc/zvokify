@@ -1,1 +1,1 @@
-https://zvokify-b9u4.vercel.app/
+https://zvokify.vercel.app/
