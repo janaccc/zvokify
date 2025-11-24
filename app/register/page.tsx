@@ -23,7 +23,7 @@ export default function RegisterPage() {
     const data = await res.json();
     alert(data.message);
   };
-
+//
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-6">
       <div className="bg-gray-900 rounded-2xl shadow-xl p-8 w-full max-w-md">
