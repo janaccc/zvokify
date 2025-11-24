@@ -27,7 +27,7 @@ export default function RegisterPage() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-6">
       <div className="bg-gray-900 rounded-2xl shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-6">📝 Registracija</h1>
+        <h1 className="text-3xl font-bold text-center mb-6">Registracija</h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
