@@ -1,15 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import {
-  Play,
-  Pause,
-  SkipBack,
-  SkipForward,
-  Home,
-  Library,
-  Search,
-} from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward } from "lucide-react";
 
 export default function Page() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -28,7 +20,7 @@ export default function Page() {
     },
     {
       title: "Čevap Flow",
-      artist: "Pjebi iz juga",
+      artist: "pjebi iz juga",
       src: "/music/test3.mp3",
     },
   ];
@@ -54,59 +46,22 @@ export default function Page() {
   };
 
   return (
-    <main className="flex bg-black text-white h-screen overflow-hidden">
+    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-6">
 
-      {/* ---- LEFT SIDEBAR ---- */}
-      <aside className="w-64 bg-neutral-900 p-6 flex flex-col gap-8">
-        <h1 className="text-3xl font-bold tracking-tight">Zvokify</h1>
+      {/* CONTAINER */}
+      <div className="bg-gray-900 rounded-2xl shadow-xl p-8 w-full max-w-3xl">
 
-        <nav className="flex flex-col gap-3 text-neutral-300">
-          <button className="flex items-center gap-3 hover:text-white transition text-lg">
-            <Home size={20} /> Domov
-          </button>
-          <button className="flex items-center gap-3 hover:text-white transition text-lg">
-            <Search size={20} /> Iskanje
-          </button>
-          <button className="flex items-center gap-3 hover:text-white transition text-lg">
-            <Library size={20} /> Knjižnica
-          </button>
-        </nav>
-      </aside>
+        <h1 className="text-3xl font-bold text-center mb-6">
+          Zvokify – Predvajalnik
+        </h1>
 
-      {/* ---- MAIN CONTENT ---- */}
-      <section className="flex-1 flex flex-col bg-gradient-to-b from-neutral-800 to-black p-8 overflow-y-auto">
-
-        <h2 className="text-2xl font-bold mb-6">Playlists</h2>
-
-        <div className="grid grid-cols-3 gap-6">
-
-          {tracks.map((track, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setCurrentTrack(index);
-                setIsPlaying(false);
-              }}
-              className="bg-neutral-900 hover:bg-neutral-800 p-4 rounded-xl transition text-left"
-            >
-              <div className="text-lg font-bold">{track.title}</div>
-              <div className="text-neutral-400 text-sm">{track.artist}</div>
-            </button>
-          ))}
-
-        </div>
-      </section>
-
-      {/* ---- MUSIC PLAYER ---- */}
-      <footer className="absolute bottom-0 left-0 right-0 bg-neutral-900 p-4 border-t border-neutral-700 flex items-center justify-between">
-
-        {/* CURRENT SONG INFO */}
-        <div className="ml-6">
-          <div className="font-semibold">{tracks[currentTrack].title}</div>
-          <div className="text-neutral-400 text-sm">{tracks[currentTrack].artist}</div>
+        {/* CURRENT TRACK INFO */}
+        <div className="text-center mb-6">
+          <h2 className="text-xl font-semibold">{tracks[currentTrack].title}</h2>
+          <p className="text-gray-400">{tracks[currentTrack].artist}</p>
         </div>
 
-        {/* AUDIO SYSTEM */}
+        {/* AUDIO */}
         <audio
           ref={audioRef}
           src={tracks[currentTrack].src}
@@ -115,33 +70,57 @@ export default function Page() {
           onPause={() => setIsPlaying(false)}
         />
 
-        {/* CONTROLS */}
-        <div className="flex items-center gap-6">
+        {/* PLAYER CONTROLS */}
+        <div className="flex justify-center gap-6 mb-8">
           <button
             onClick={prevTrack}
-            className="p-2 hover:bg-neutral-800 rounded-full"
+            className="p-3 bg-gray-800 rounded-full hover:bg-gray-700 transition"
           >
             <SkipBack />
           </button>
 
           <button
             onClick={togglePlay}
-            className="p-3 bg-white text-black hover:scale-105 transition rounded-full"
+            className="p-5 bg-indigo-600 rounded-full hover:bg-indigo-500 transition"
           >
-            {isPlaying ? <Pause /> : <Play />}
+            {isPlaying ? <Pause size={24} /> : <Play size={24} />}
           </button>
 
           <button
             onClick={nextTrack}
-            className="p-2 hover:bg-neutral-800 rounded-full"
+            className="p-3 bg-gray-800 rounded-full hover:bg-gray-700 transition"
           >
             <SkipForward />
           </button>
         </div>
 
-        <div className="w-24" />
 
-      </footer>
+        {/* TRACK LIST */}
+        <div className="flex flex-col gap-3">
+          <h3 className="text-lg font-semibold text-gray-300 mb-2">
+            Playlist
+          </h3>
+
+          {tracks.map((track, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                setCurrentTrack(index);
+                setIsPlaying(false);
+              }}
+              className={`p-3 rounded-xl transition w-full flex justify-between items-center ${
+                index === currentTrack
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-800 hover:bg-gray-700 text-gray-300"
+              }`}
+            >
+              <span>{track.title}</span>
+              <span className="text-sm opacity-70">{track.artist}</span>
+            </button>
+          ))}
+        </div>
+
+      </div>
     </main>
   );
 }
