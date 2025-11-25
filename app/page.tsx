@@ -23,12 +23,12 @@ export default function Page() {
     },
     {
       title: "Kebab Vibes",
-      artist: "DJ Grill",
+      artist: "DJ albo",
       src: "/music/test2.mp3",
     },
     {
       title: "Čevap Flow",
-      artist: "Ćevap Boy",
+      artist: "Pjebi iz juga",
       src: "/music/test3.mp3",
     },
   ];
