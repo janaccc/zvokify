@@ -1,31 +1,42 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Play, Pause, SkipBack, SkipForward } from "lucide-react";
+import {
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Heart,
+} from "lucide-react";
 
 export default function Page() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const tracks = [
+  const initialTracks = [
     {
       title: "Mešano meso",
       artist: "123",
       src: "/music/mesanomeso.mp3",
+      liked: false,
     },
     {
       title: "Kebab Vibes",
-      artist: "DJ albo",
+      artist: "DJ Grill",
       src: "/music/test2.mp3",
+      liked: false,
     },
     {
       title: "Čevap Flow",
-      artist: "pjebi iz juga",
+      artist: "Ćevap Boy",
       src: "/music/test3.mp3",
+      liked: false,
     },
   ];
 
+  const [tracks, setTracks] = useState(initialTracks);
   const [currentTrack, setCurrentTrack] = useState(0);
+  const [search, setSearch] = useState("");
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -45,10 +56,19 @@ export default function Page() {
     setIsPlaying(false);
   };
 
+  const toggleLike = (index: number) => {
+    const updated = [...tracks];
+    updated[index].liked = !updated[index].liked;
+    setTracks(updated);
+  };
+
+  // Filter skladb
+  const filteredTracks = tracks.filter((t) =>
+    t.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gray-950 text-white p-6">
-
-      {/* CONTAINER */}
       <div className="bg-gray-900 rounded-2xl shadow-xl p-8 w-full max-w-3xl">
 
         <h1 className="text-3xl font-bold text-center mb-6">
@@ -94,6 +114,16 @@ export default function Page() {
           </button>
         </div>
 
+        {/* SEARCH BAR */}
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Išči skladbe..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full p-3 rounded-xl bg-gray-800 text-white placeholder-gray-500 border border-gray-700 focus:border-indigo-500 outline-none"
+          />
+        </div>
 
         {/* TRACK LIST */}
         <div className="flex flex-col gap-3">
@@ -101,25 +131,47 @@ export default function Page() {
             Playlist
           </h3>
 
-          {tracks.map((track, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setCurrentTrack(index);
-                setIsPlaying(false);
-              }}
-              className={`p-3 rounded-xl transition w-full flex justify-between items-center ${
-                index === currentTrack
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-800 hover:bg-gray-700 text-gray-300"
-              }`}
-            >
-              <span>{track.title}</span>
-              <span className="text-sm opacity-70">{track.artist}</span>
-            </button>
-          ))}
-        </div>
+          {filteredTracks.map((track, index) => {
+            // Ker se filteredTracks uporablja, potrebujemo originalni index
+            const realIndex = tracks.findIndex(
+              (t) => t.title === track.title
+            );
 
+            return (
+              <div
+                key={realIndex}
+                className={`p-3 rounded-xl transition w-full flex items-center justify-between ${
+                  realIndex === currentTrack
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-800 hover:bg-gray-700 text-gray-300"
+                }`}
+              >
+                <button
+                  onClick={() => {
+                    setCurrentTrack(realIndex);
+                    setIsPlaying(false);
+                  }}
+                  className="flex flex-col text-left"
+                >
+                  <span>{track.title}</span>
+                  <span className="text-sm opacity-70">{track.artist}</span>
+                </button>
+
+                {/* HEART BUTTON */}
+                <button
+                  onClick={() => toggleLike(realIndex)}
+                  className="p-2 hover:scale-110 transition"
+                >
+                  <Heart
+                    size={22}
+                    fill={track.liked ? "red" : "none"}
+                    color={track.liked ? "red" : "white"}
+                  />
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </main>
   );
